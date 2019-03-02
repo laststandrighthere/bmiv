@@ -126,7 +126,7 @@
 #define QUSB2PHY_PORT_QUICKCHARGE2 0x74
 #define QUSB2PHY_PORT_INT_STATUS 0xF0
 
-unsigned int tune2 = 0x5F;
+unsigned int tune2;
 module_param(tune2, uint, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(tune2, "QUSB PHY TUNE2");
 
