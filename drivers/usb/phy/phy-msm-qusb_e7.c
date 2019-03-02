@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017,2019, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2014-2017, The Linux Foundation. All rights reserved.
  * Copyright (C) 2018 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -126,7 +126,7 @@
 #define QUSB2PHY_PORT_QUICKCHARGE2 0x74
 #define QUSB2PHY_PORT_INT_STATUS 0xF0
 
-unsigned int tune2 = 0x5F;
+unsigned int tune2;
 module_param(tune2, uint, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(tune2, "QUSB PHY TUNE2");
 
@@ -1112,12 +1112,7 @@ static int qusb_phy_set_suspend(struct usb_phy *phy, int suspend)
 			/* Make sure that above write is completed */
 			wmb();
 
-			/* Do not disable clocks if there is vote for it */
-			if (!qphy->rm_pulldown)
-				qusb_phy_enable_clocks(qphy, false);
-			else
-				dev_dbg(phy->dev, "race with rm_pulldown. Keep clocks ON\n");
-
+			qusb_phy_enable_clocks(qphy, false);
 			qusb_phy_update_tcsr_level_shifter(qphy, 0x0);
 			/* Do not disable power rails if there is vote for it */
 			if (!qphy->rm_pulldown)
