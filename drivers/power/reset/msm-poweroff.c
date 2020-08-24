@@ -289,9 +289,6 @@ static void msm_restart_prepare(const char *cmd)
 	 * Write download mode flags if restart_mode says so
 	 * Kill download mode if master-kill switch is set
 	 */
-
-
-
 	set_dload_mode(download_mode &&
 			(in_panic || restart_mode == RESTART_DLOAD || hq_reboot_dl));
 #endif
@@ -307,6 +304,8 @@ static void msm_restart_prepare(const char *cmd)
 				((cmd != NULL && cmd[0] != '\0') &&
 				strcmp(cmd, "userrequested")));
 	}
+
+	need_warm_reset = true;
 
 	/* Hard reset the PMIC unless memory contents must be maintained. */
 	if (need_warm_reset) {
